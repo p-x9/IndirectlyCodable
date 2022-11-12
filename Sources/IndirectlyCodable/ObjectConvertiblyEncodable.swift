@@ -27,5 +27,5 @@ extension ObjectConvertiblyEncodable {
     }
 
     public func reverseApplyProperties(with target: Target) {}
-    public func applyProperties(to layer: Target) {}
+    public func applyProperties(to target: Target) {}
 }
