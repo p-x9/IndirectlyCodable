@@ -10,3 +10,11 @@ import Foundation
 
 public protocol ObjectConvertiblyCodable: ObjectConvertiblyEncodable, ObjectConvertiblyDecodable {}
 
+extension ObjectConvertiblyCodable {
+    public static var targetTypeName: String {
+        String(reflecting: Target.self)
+    }
+
+    public func reverseApplyProperties(with target: Target) {}
+    public func applyProperties(to layer: Target) {}
+}

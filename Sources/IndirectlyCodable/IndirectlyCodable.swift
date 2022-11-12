@@ -10,7 +10,6 @@ import Foundation
 
 public protocol IndirectlyCodable: IndirectlyEncodable, IndirectlyDecodable where Target: ObjectConvertiblyCodable {
 
-
     static var codableTypeName: String { get }
 
     func codable() -> Target?
