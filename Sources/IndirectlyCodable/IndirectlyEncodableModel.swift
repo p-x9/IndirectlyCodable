@@ -15,8 +15,8 @@ public protocol IndirectlyEncodableModel: Encodable {
 
     init(with target: Target)
 
-    func applyProperties(to target: Target)
-    func reverseApplyProperties(with target: Target)
+    func applyProperties(to target: inout Target)
+    func applyProperties(with target: Target)
 
     func converted() -> Target?
 }
@@ -26,6 +26,13 @@ extension IndirectlyEncodableModel {
         String(reflecting: Target.self)
     }
 
-    public func reverseApplyProperties(with target: Target) {}
-    public func applyProperties(to target: Target) {}
+    public func applyProperties(to target: inout Target) {}
+    public func applyProperties(with target: Target) {}
+}
+
+extension IndirectlyEncodableModel where Target: AnyObject {
+    public func applyProperties(to target: Target) {
+        var target = target
+        applyProperties(to: &target)
+    }
 }

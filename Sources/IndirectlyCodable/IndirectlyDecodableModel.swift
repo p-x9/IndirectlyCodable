@@ -15,8 +15,8 @@ public protocol IndirectlyDecodableModel: Decodable {
 
     init(with target: Target)
 
-    func applyProperties(to target: Target)
-    func reverseApplyProperties(with target: Target)
+    func applyProperties(to target: inout Target)
+    func applyProperties(with target: Target)
 
     func converted() -> Target?
 }
@@ -26,6 +26,13 @@ extension IndirectlyDecodableModel {
         String(reflecting: Target.self)
     }
 
-    public func reverseApplyProperties(with target: Target) {}
-    public func applyProperties(to target: Target) {}
+    public func applyProperties(to target: inout Target) {}
+    public func applyProperties(with target: Target) {}
+}
+
+extension IndirectlyDecodableModel where Target: AnyObject {
+    public func applyProperties(to target: Target) {
+        var target = target
+        applyProperties(to: &target)
+    }
 }

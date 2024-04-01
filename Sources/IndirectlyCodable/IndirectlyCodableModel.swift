@@ -15,6 +15,13 @@ extension IndirectlyCodableModel {
         String(reflecting: Target.self)
     }
 
-    public func reverseApplyProperties(with target: Target) {}
-    public func applyProperties(to target: Target) {}
+    public func applyProperties(to target: inout Target) {}
+    public func applyProperties(with target: Target) {}
+}
+
+extension IndirectlyCodableModel where Target: AnyObject {
+    public func applyProperties(to target: Target) {
+        var target = target
+        applyProperties(to: &target)
+    }
 }
