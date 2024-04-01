@@ -9,16 +9,16 @@
 import Foundation
 
 public protocol IndirectlyEncodable {
-    associatedtype Target: ObjectConvertiblyEncodable
+    associatedtype Model: ObjectConvertiblyEncodable
 
     static var codableTypeName: String { get }
 
-    func encodable() -> Target?
+    func encodable() -> Model?
 }
 
 extension IndirectlyEncodable {
-    public func encodable() -> Target? {
-        guard let object = self as? Target.Target else { return nil }
+    public func encodable() -> Model? {
+        guard let object = self as? Model.Target else { return nil }
 
         return .init(with: object)
     }
@@ -26,6 +26,6 @@ extension IndirectlyEncodable {
 
 extension IndirectlyEncodable {
     public static var codableTypeName: String {
-        String(reflecting: Target.self)
+        String(reflecting: Model.self)
     }
 }

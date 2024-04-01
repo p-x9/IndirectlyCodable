@@ -8,31 +8,31 @@
 
 import Foundation
 
-public protocol IndirectlyCodable: IndirectlyEncodable, IndirectlyDecodable where Target: ObjectConvertiblyCodable {
+public protocol IndirectlyCodable: IndirectlyEncodable, IndirectlyDecodable where Model: ObjectConvertiblyCodable {
 
     static var codableTypeName: String { get }
 
-    func codable() -> Target?
+    func codable() -> Model?
 }
 
 extension IndirectlyCodable {
-    public func codable() -> Target? {
-        guard let object = self as? Target.Target else { return nil }
+    public func codable() -> Model? {
+        guard let object = self as? Model.Target else { return nil }
 
         return .init(with: object)
     }
 
-    public func encodable() -> Target? {
+    public func encodable() -> Model? {
         codable()
     }
 
-    public func decodable() -> Target? {
+    public func decodable() -> Model? {
         codable()
     }
 }
 
 extension IndirectlyCodable {
     public static var codableTypeName: String {
-        String(reflecting: Target.self)
+        String(reflecting: Model.self)
     }
 }
