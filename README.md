@@ -6,7 +6,7 @@ Protocol for indirect `Codable`(`Encodable`, `Decodable`) conformance
 ### IndirectlyCodable
 #### Target
 Direct `Codable` conforming type aliases.
-Must conform to `ObjectConvertiblyCodable` described below.
+Must conform to `IndirectlyCodableModel` described below.
 ```swift
 typealias Target = CALayerModel
 ```
@@ -24,7 +24,7 @@ public class var codableTypeName: String {
 }
 ```
 
-### ObjectConvertiblyCodable
+### IndirectlyCodableModel
 #### Target
 Alias of the type to be represented
 ```swift
@@ -47,7 +47,7 @@ let propertyMap: [PartialKeyPath<CALayerModel>: ReferenceWritableKeyPathValueApp
 func applyProperties(to target: CALayer) {
     Self.propertyMap.forEach { keyPath, applier in
         var value = self[keyPath: keyPath]
-        if let convertible = value as? (any ObjectConvertiblyCodable),
+        if let convertible = value as? (any IndirectlyCodableModel),
             let converted = convertible.converted() {
             value = converted
         }
@@ -58,3 +58,6 @@ func applyProperties(to target: CALayer) {
 
 #### reverseApplyProperties with Target
 Apply values from the target object to its own properties.
+
+## Licenses
+[MIT License](./LICENSE)

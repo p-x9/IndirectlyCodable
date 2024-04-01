@@ -8,7 +8,7 @@
 
 import Foundation
 
-public protocol IndirectlyCodable: IndirectlyEncodable, IndirectlyDecodable where Model: ObjectConvertiblyCodable {
+public protocol IndirectlyCodable: IndirectlyEncodable, IndirectlyDecodable where Model: IndirectlyCodableModel {
 
     static var codableTypeName: String { get }
 
@@ -17,9 +17,9 @@ public protocol IndirectlyCodable: IndirectlyEncodable, IndirectlyDecodable wher
 
 extension IndirectlyCodable {
     public func codable() -> Model? {
-        guard let object = self as? Model.Target else { return nil }
+        guard let target = self as? Model.Target else { return nil }
 
-        return .init(with: object)
+        return .init(with: target)
     }
 
     public func encodable() -> Model? {

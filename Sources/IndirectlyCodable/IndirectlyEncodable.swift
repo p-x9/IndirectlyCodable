@@ -9,7 +9,7 @@
 import Foundation
 
 public protocol IndirectlyEncodable {
-    associatedtype Model: ObjectConvertiblyEncodable
+    associatedtype Model: IndirectlyEncodableModel
 
     static var codableTypeName: String { get }
 
@@ -18,9 +18,9 @@ public protocol IndirectlyEncodable {
 
 extension IndirectlyEncodable {
     public func encodable() -> Model? {
-        guard let object = self as? Model.Target else { return nil }
+        guard let target = self as? Model.Target else { return nil }
 
-        return .init(with: object)
+        return .init(with: target)
     }
 }
 
